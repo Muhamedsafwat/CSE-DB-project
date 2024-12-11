@@ -1,35 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import NotesList from "../components/NotesList";
-import NoteForm from "../components/NoteForm";
-import { getNotes, createNote } from "../utils/api";
-
+import { FaHome } from "react-icons/fa";
 const Home = () => {
-  const [notes, setNotes] = useState([]);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchNotes = async () => {
-      const response = await getNotes();
-      setNotes(response.data);
-    };
-    fetchNotes();
-  }, []);
-
-  const handleAddNote = async (note) => {
-    const response = await createNote(note);
-    setNotes([...notes, response.data]);
-  };
-
-  const handleViewNote = (id) => {
-    navigate(`/notes/${id}`);
-  };
-
   return (
-    <div className="p-10 flex flex-col items-center">
-      <h1 className="text-red-500">All Notes</h1>
-      <NoteForm onAddNote={handleAddNote} />
-      <NotesList notes={notes} onViewNote={handleViewNote} />
+    <div>
+      <h1 className="text-3xl font-bold mb-5 flex items-center gap-2">
+        <FaHome /> Home
+      </h1>
     </div>
   );
 };
