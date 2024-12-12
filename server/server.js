@@ -5,6 +5,7 @@ import cors from "cors";
 
 //import routers
 import customersRouter from "./routes/customersRoute.js";
+import ordersRouter from "./routes/ordersRoute.js";
 
 // --------- inintialize the server --------- //
 const app = express();
@@ -14,6 +15,7 @@ app.use(cors());
 // ----------- implement routes ----------- //
 
 app.use("/customers", customersRouter);
+app.use("/orders", ordersRouter);
 
 // ------------- start the server ---------- //
 //error handler

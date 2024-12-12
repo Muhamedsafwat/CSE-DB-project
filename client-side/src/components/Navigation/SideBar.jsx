@@ -21,7 +21,7 @@ const links = [
 const SideBar = () => {
   const location = useLocation();
   return (
-    <div className="bg-gray-900 text-white h-screen w-[18%] py-10 shadow-md flex flex-col justify-between">
+    <div className="bg-gray-900 text-white h-screen w-[18%] py-10 shadow-md flex flex-col justify-between fixed top-0 z-10">
       <h1 className="text-xl font-bold mb-8 mx-10">Book store</h1>
       <ul className="mb-32">
         {links.map((link) => (
@@ -41,7 +41,7 @@ const SideBar = () => {
         ))}
       </ul>
       <div className="mx-10 flex items-center gap-2">
-        <FaCode size={25} className="text-violet-300" /> CSE @27
+        <FaCode size={25} className="text-violet-300" /> CSE #27
       </div>
     </div>
   );

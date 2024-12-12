@@ -8,7 +8,6 @@ import EditBook from "./books/EditBook";
 
 import Customers from "./customers/Customers";
 import AddCustomer from "./customers/AddCustomer";
-import EditCustomer from "./customers/EditCustomer";
 
 import Employees from "./employees/Employees";
 import AddEmployee from "./employees/AddEmployee";
@@ -30,7 +29,6 @@ export {
   EditBook,
   Customers,
   AddCustomer,
-  EditCustomer,
   Employees,
   AddEmployee,
   EditEmployee,

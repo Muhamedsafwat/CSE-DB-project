@@ -10,7 +10,6 @@ import {
   EditBook,
   Customers,
   AddCustomer,
-  EditCustomer,
   Employees,
   AddEmployee,
   EditEmployee,
@@ -34,7 +33,6 @@ function App() {
           <Route path="/books/edit/:id" element={<EditBook />} />
           <Route path="/customers" element={<Customers />} />
           <Route path="/customers/add" element={<AddCustomer />} />
-          <Route path="/customers/edit/:id" element={<EditCustomer />} />
           <Route path="/employees" element={<Employees />} />
           <Route path="/employees/add" element={<AddEmployee />} />
           <Route path="/employees/edit/:id" element={<EditEmployee />} />

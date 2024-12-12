@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
   return (
     <div className="flex">
       <SideBar />
-      <div className="flex-grow flex flex-col items-center relative text-gray-800 bg-gray-50">
+      <div className="w-[82%] ml-auto flex flex-col items-center relative text-gray-800 bg-gray-50">
         <BackButton />
         <PageContainer>{children}</PageContainer>
       </div>

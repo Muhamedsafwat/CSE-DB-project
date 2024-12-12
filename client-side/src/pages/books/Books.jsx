@@ -1,9 +1,14 @@
+import { PiBooks } from "react-icons/pi";
+
 import AddButton from "../../components/Navigation/AddButton";
+
 const Books = () => {
   return (
     <>
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold mb-5">Books</h1>
+        <h1 className="text-3xl font-bold mb-5 flex items-center gap-2">
+          <PiBooks /> Books
+        </h1>
         <AddButton />
       </div>
       <div className="overflow-x-auto">

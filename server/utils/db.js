@@ -5,6 +5,6 @@ export const pool = mysql
     host: "127.0.0.1",
     user: "root",
     password: "safwat911",
-    database: "notes_app",
+    database: "lll",
   })
   .promise();
