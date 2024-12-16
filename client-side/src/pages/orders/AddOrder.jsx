@@ -12,12 +12,13 @@ import SubmitButton from "../../components/forms/SubmitButton";
 const AddCustomer = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [phoneNums, setPhoneNums] = useState([]);
-  const [currentBookISBN, setCurrentBookISBN] = useState("");
+  const [currentBookName, setCurrentBookName] = useState("");
   const [currentBookQuantity, setCurrentBookQuantity] = useState(1);
+  const [bookNames, setBookNames] = useState([]);
   const [books, setBooks] = useState([]);
 
   const addBook = () => {
-    if (!currentBookISBN || !currentBookQuantity) {
+    if (!currentBookName || !currentBookQuantity) {
       swal({
         title: "Incorrect information",
         text: "Please fill all the fields",
@@ -27,9 +28,9 @@ const AddCustomer = () => {
     }
     setBooks([
       ...books,
-      { ISBN: currentBookISBN, quantity: currentBookQuantity },
+      { name: currentBookName, quantity: currentBookQuantity },
     ]);
-    setCurrentBookISBN("");
+    setCurrentBookName("");
     setCurrentBookQuantity(1);
   };
 
@@ -39,6 +40,12 @@ const AddCustomer = () => {
       setPhoneNums(res.data);
     };
 
+    const getBookNames = async () => {
+      const res = await axios.get("http://localhost:3000/books/names");
+      setBookNames(res.data);
+    };
+
+    getBookNames();
     getNumbers();
   }, []);
 
@@ -56,18 +63,22 @@ const AddCustomer = () => {
   //submit handler
   const onSubmit = async (data) => {
     const requestBody = { ...data, books };
+
     setIsLoading(true);
     try {
-      const res = await axios.post("http://localhost:3000/orders", data);
+      const res = await axios.post("http://localhost:3000/orders", requestBody);
       swal({
         title: "Success!",
-        text: "Customer added successfully",
+        text: "Order added successfully",
         icon: "success",
       });
-      console.log(res.data);
     } catch (err) {
       console.log(err);
-      swal({ title: "Error!", text: "Check your server logs", icon: "error" });
+      swal({
+        title: "Network Error!",
+        text: "Please check your connection",
+        icon: "error",
+      });
     }
 
     setIsLoading(false);
@@ -108,11 +119,17 @@ const AddCustomer = () => {
         <label>Add Book</label>
         <div className="flex gap-5 items-start">
           <input
-            value={currentBookISBN}
-            onChange={(e) => setCurrentBookISBN(e.target.value)}
-            placeholder="Book ISBN"
+            value={currentBookName}
+            onChange={(e) => setCurrentBookName(e.target.value)}
+            list="bookNames"
+            placeholder="Book Name"
             className={`bg-gray-100 mb-5 mt-1 border-2 border-gray-300 text-gray-900 text-sm rounded-md duration-150 focus:outline-none active:ring-0 focus:border-green-500 p-2.5 flex-grow`}
           />
+          <datalist id="bookNames">
+            {bookNames.map((item) => (
+              <option key={item.BookName} value={item.BookName} />
+            ))}
+          </datalist>
           <input
             value={currentBookQuantity}
             onChange={(e) => setCurrentBookQuantity(e.target.value)}
@@ -137,7 +154,7 @@ const AddCustomer = () => {
                 key={index}
                 className="flex gap-20 text-lg font-medium items-center rounded-md border border-gray-300 px-5 py-2 my-2"
               >
-                <p className="min-w-32">{book.ISBN}</p>
+                <p className="min-w-32">{book.name}</p>
                 <p>x{book.quantity}</p>
                 <button
                   type="button"
@@ -151,7 +168,7 @@ const AddCustomer = () => {
           </>
         )}
         {/*Submit*/}
-        <SubmitButton type="submit" disabled={isLoading}>
+        <SubmitButton type="submit" disabled={isLoading || books.length <= 0}>
           {isLoading ? "Loading" : "Submit"}
         </SubmitButton>
       </form>

@@ -1,15 +1,12 @@
 import { pool } from "../utils/db.js";
 
 export const getAllOrders = async (req, res) => {
-  //run the query here
-  const rows = await pool.query("SELECT * FROM customer;");
-  res.json({ rows });
-};
+  const [rows] =
+    await pool.query(`SELECT OrderID,NameCustomer,EmployeeID,Date,TotalPrice,PaymentMethod
+FROM customer
+INNER JOIN lll.order ON customer.idCustomer=lll.order.IDCustomer`);
 
-export const getOrderById = async (req, res) => {
-  const id = req.params.id;
-  //run the query here
-  res.send(`Get customerById : ${id}`);
+  res.send(rows);
 };
 
 export const deleteOrder = async (req, res) => {
@@ -32,24 +29,63 @@ export const updateOrder = async (req, res) => {
 
 export const createOrder = async (req, res) => {
   const { phone, employeeId, paymentMethod, books } = req.body;
-  const [customerId] = await pool.query(
-    "SELECT idCustomer FROM lll.customer WHERE PhoneNumber = ?",
-    [Number(phone)]
+
+  try {
+    // Fetch customer ID
+    const [customerId] = await pool.query(
+      "SELECT idCustomer FROM lll.customer WHERE PhoneNumber = ?",
+      [Number(phone)]
+    );
+    if (customerId.length === 0) {
+      return res.status(404).send("Customer not found");
+    }
+    const id = customerId[0].idCustomer;
+
+    // Add order and retrieve OrderID
+    const [addOrderResult] = await pool.query(
+      "CALL add_order(?, ?, NOW(), ?)",
+      [id, employeeId, paymentMethod]
+    );
+
+    // Extract the OrderID from the result of the procedure
+    const [order] = await pool.query("SELECT LAST_INSERT_ID() AS OrderID");
+    const orderId = order[0].OrderID;
+
+    // Insert books into bookorder
+    for (const book of books) {
+      try {
+        // Fetch ISBN for each book
+        const [bookISBN] = await pool.query(
+          "SELECT ISBN FROM book WHERE BookName = ?;",
+          [book.name]
+        );
+        if (bookISBN.length === 0) {
+          return res.status(404).send(`Book ${book.name} not found`);
+        }
+        const ISBN = bookISBN[0].ISBN;
+
+        // Add bookorder
+        await pool.query("CALL add_bookorder(?, ?, ?)", [
+          ISBN,
+          orderId,
+          book.quantity,
+        ]);
+      } catch (error) {
+        return res
+          .status(500)
+          .send(`Error processing book ${book.name}: ${error.message}`);
+      }
+    }
+
+    res.send({ message: "Order created successfully", orderId });
+  } catch (error) {
+    res.status(500).send(`Error creating order: ${error.message}`);
+  }
+};
+
+export const getInsights = async (req, res) => {
+  const [response] = await pool.query(
+    "SELECT SUM(TotalPrice) as totalIncome, COUNT(*) as NumOfOrders FROM lll.order;"
   );
-  const id = customerId[0].idCustomer;
-  const [addOrderResult] = await pool.query("CALL add_order(?, ?, NOW() , ?)", [
-    id,
-    employeeId,
-    paymentMethod,
-  ]);
-
-  console.log(books);
-
-  books.forEach(async (book) => {
-    await pool.query("call add_bookorder( ? , LAST_INSERT_ID() , ?)", [
-      book.ISBN,
-      book.quantity,
-    ]);
-  });
-  res.send(books);
+  res.json(response[0]);
 };

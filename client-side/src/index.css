@@ -3,5 +3,13 @@
 @tailwind utilities;
 
 * {
-    font-family: "Almarai", serif;
+  font-family: "Almarai", serif;
+}
+
+label {
+  @apply mt-5;
+}
+
+body {
+  @apply bg-gray-50
 }

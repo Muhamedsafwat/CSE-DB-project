@@ -6,24 +6,25 @@ import { FaHome, FaPencilAlt, FaCode } from "react-icons/fa";
 import { HiOutlineUserGroup } from "react-icons/hi2";
 import { IoFileTrayStacked } from "react-icons/io5";
 import { PiBooks } from "react-icons/pi";
-import { SiGoogleanalytics } from "react-icons/si";
 
 const links = [
   { label: "home", href: "/", icon: <FaHome /> },
   { label: "customers", href: "/customers", icon: <HiOutlineUserGroup /> },
   { label: "orders", href: "/orders", icon: <IoFileTrayStacked /> },
   { label: "books", href: "/books", icon: <PiBooks /> },
-  { label: "authors", href: "/authors", icon: <FaPencilAlt /> },
+  { label: "publishers", href: "/publishers", icon: <FaPencilAlt /> },
   { label: "employees", href: "/employees", icon: <HiOutlineUserGroup /> },
-  { label: "statistics", href: "/statistics", icon: <SiGoogleanalytics /> },
 ];
 
+import logo from "../../../public/logo.png";
 const SideBar = () => {
   const location = useLocation();
   return (
-    <div className="bg-gray-900 text-white h-screen w-[18%] py-10 shadow-md flex flex-col justify-between fixed top-0 z-10">
-      <h1 className="text-xl font-bold mb-8 mx-10">Book store</h1>
-      <ul className="mb-32">
+    <div className="bg-gray-900 text-white h-screen w-[18%] pb-10 shadow-md flex flex-col justify-between fixed top-0 z-10">
+      <h1 className="text-xl font-bold">
+        <img src={logo} alt="logo" />
+      </h1>
+      <ul className="mb-20">
         {links.map((link) => (
           <li
             key={link.label}

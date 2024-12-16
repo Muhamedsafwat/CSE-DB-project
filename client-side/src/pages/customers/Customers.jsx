@@ -7,7 +7,12 @@ import AddButton from "../../components/Navigation/AddButton";
 import TableSkeleton from "../../components/loaders/TableSkeleton";
 import Table from "../../components/Table";
 const Customers = () => {
-  const tableCols = ["idCustomer", "NameCustomer", "PhoneNumber", "Email"];
+  const tableCols = [
+    { name: "idCustomer", label: "id" },
+    { name: "NameCustomer", label: "Name" },
+    { name: "PhoneNumber", label: "Phone" },
+    { name: "Email", label: "Email" },
+  ];
   //fetch data
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
@@ -19,7 +24,9 @@ const Customers = () => {
   };
 
   useEffect(() => {
-    getData();
+    setTimeout(() => {
+      getData();
+    }, 1500);
   }, []);
 
   return (
@@ -39,6 +46,7 @@ const Customers = () => {
           data={data}
           refresh={getData}
           idKey="idCustomer"
+          deleteBtn
         />
       )}
     </>

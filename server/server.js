@@ -6,6 +6,11 @@ import cors from "cors";
 //import routers
 import customersRouter from "./routes/customersRoute.js";
 import ordersRouter from "./routes/ordersRoute.js";
+import authorsRouter from "./routes/authorsRoute.js";
+import publishersRouter from "./routes/publishersRoute.js";
+import booksRouter from "./routes/booksRoute.js";
+import categoriesRouter from "./routes/categoriesRoute.js";
+import employeesRouter from "./routes/employeesRoute.js";
 
 // --------- inintialize the server --------- //
 const app = express();
@@ -16,6 +21,11 @@ app.use(cors());
 
 app.use("/customers", customersRouter);
 app.use("/orders", ordersRouter);
+app.use("/authors", authorsRouter);
+app.use("/publishers", publishersRouter);
+app.use("/books", booksRouter);
+app.use("/categories", categoriesRouter);
+app.use("/employees", employeesRouter);
 
 // ------------- start the server ---------- //
 //error handler

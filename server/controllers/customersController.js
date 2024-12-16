@@ -48,3 +48,10 @@ export const getCustomerNumbers = async (req, res) => {
   const [numbers] = await pool.query("select PhoneNumber from customer");
   res.json(numbers);
 };
+
+export const getCustomersCount = async (req, res) => {
+  const [count] = await pool.query(
+    "SELECT COUNT(*) as customersCount from lll.customer;"
+  );
+  res.send(count[0]);
+};
