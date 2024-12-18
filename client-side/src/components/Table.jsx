@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import swal from "sweetalert";
 import { MdDeleteOutline } from "react-icons/md";
+import { FaHistory } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Table = ({ columns, data, slug, refresh, idKey, deleteBtn }) => {
   const [loadingBtn, setLoadingBtn] = useState(null);
@@ -122,6 +124,17 @@ const Table = ({ columns, data, slug, refresh, idKey, deleteBtn }) => {
                     >
                       Qtty
                     </button>
+                  )}
+                  {slug == "customers" && (
+                    <Link to={`${item.NameCustomer}`}>
+                      <button
+                        className={
+                          "bg-orange-400 h-full disabled:opacity-30 hover:bg-orange-500 text-white font-semibold text-xs p-1 rounded-full border-2 border-orange-500 duration-200"
+                        }
+                      >
+                        <FaHistory size={20} />
+                      </button>
+                    </Link>
                   )}
                   <button
                     disabled={loadingBtn === index}

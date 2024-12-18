@@ -3,10 +3,10 @@ import AddPublisher from "./publishers/AddPublisher";
 
 import Books from "./books/Books";
 import AddBook from "./books/AddBook";
-import EditBook from "./books/EditBook";
 
 import Customers from "./customers/Customers";
 import AddCustomer from "./customers/AddCustomer";
+import History from "./customers/History";
 
 import Employees from "./employees/Employees";
 
@@ -21,7 +21,6 @@ export {
   AddPublisher,
   Books,
   AddBook,
-  EditBook,
   Customers,
   AddCustomer,
   Employees,
@@ -29,4 +28,5 @@ export {
   AddOrder,
   Statistics,
   Home,
+  History,
 };

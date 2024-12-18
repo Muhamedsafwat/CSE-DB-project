@@ -4,6 +4,7 @@ import {
   createOrder,
   getAllOrders,
   getInsights,
+  getOrdersByCustomerName,
 } from "../controllers/ordersController.js";
 
 const router = express.Router();
@@ -12,5 +13,6 @@ const router = express.Router();
 router.get("/", getAllOrders);
 router.post("/", createOrder);
 router.get("/insights", getInsights);
+router.post("/customerOrders", getOrdersByCustomerName);
 
 export default router;

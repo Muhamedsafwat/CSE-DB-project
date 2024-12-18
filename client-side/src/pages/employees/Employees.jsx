@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 
 import { HiOutlineUserGroup } from "react-icons/hi2";
 
-import AddButton from "../../components/Navigation/AddButton";
 import TableSkeleton from "../../components/loaders/TableSkeleton";
 import Table from "../../components/Table";
 const Customers = () => {

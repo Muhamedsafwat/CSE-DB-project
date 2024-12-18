@@ -6,7 +6,6 @@ import {
   AddPublisher,
   Books,
   AddBook,
-  EditBook,
   Customers,
   AddCustomer,
   Employees,
@@ -14,6 +13,7 @@ import {
   AddOrder,
   Statistics,
   Home,
+  History,
 } from "./pages";
 function App() {
   return (
@@ -25,9 +25,9 @@ function App() {
           <Route path="/publishers/add" element={<AddPublisher />} />
           <Route path="/books" element={<Books />} />
           <Route path="/books/add" element={<AddBook />} />
-          <Route path="/books/edit/:id" element={<EditBook />} />
           <Route path="/customers" element={<Customers />} />
           <Route path="/customers/add" element={<AddCustomer />} />
+          <Route path="/customers/:id" element={<History />} />
           <Route path="/employees" element={<Employees />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/add" element={<AddOrder />} />

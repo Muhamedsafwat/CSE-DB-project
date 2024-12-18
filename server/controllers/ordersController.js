@@ -89,3 +89,16 @@ export const getInsights = async (req, res) => {
   );
   res.json(response[0]);
 };
+
+export const getOrdersByCustomerName = async (req, res) => {
+  const { customerName } = req.body;
+  try {
+    const [[response]] = await pool.query("Call GetCustomerOrders(?);", [
+      customerName,
+    ]);
+    res.json(response);
+  } catch (err) {
+    // console.error(err);
+    res.status(404).send("No orders found for this customer");
+  }
+};
